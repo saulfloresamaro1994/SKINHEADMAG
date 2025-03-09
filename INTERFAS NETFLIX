@@ -173,13 +173,31 @@
                 { title: 'Película 1', image: 'https://via.placeholder.com/200x300?text=Película+1', link: 'https://www.example.com/video.mp4' },
                 { title: 'Película 2', image: 'https://via.placeholder.com/200x300?text=Película+2', link: 'https://www.example.com/video.mkv' },
                 { title: 'Película 3', image: 'https://via.placeholder.com/200x300?text=Película+3', link: 'https://www.example.com/video.m3u8' }
+                { title: 'Película 1', image: 'https://via.placeholder.com/200x300?text=Película+1', link: 'https://www.example.com/video.mp4' },
+                { title: 'Película 2', image: 'https://via.placeholder.com/200x300?text=Película+2', link: 'https://www.example.com/video.mkv' },
+                { title: 'Película 3', image: 'https://via.placeholder.com/200x300?text=Película+3', link: 'https://www.example.com/video.m3u8' }
+                { title: 'Película 1', image: 'https://via.placeholder.com/200x300?text=Película+1', link: 'https://www.example.com/video.mp4' },
+                { title: 'Película 2', image: 'https://via.placeholder.com/200x300?text=Película+2', link: 'https://www.example.com/video.mkv' },
+                { title: 'Película 3', image: 'https://via.placeholder.com/200x300?text=Película+3', link: 'https://www.example.com/video.m3u8' }
             ],
             series: [
                 { title: 'Serie 1', image: 'https://via.placeholder.com/200x300?text=Serie+1', link: 'https://www.example.com/serie1.mp4' },
                 { title: 'Serie 2', image: 'https://via.placeholder.com/200x300?text=Serie+2', link: 'https://www.example.com/serie2.mkv' },
                 { title: 'Serie 3', image: 'https://via.placeholder.com/200x300?text=Serie+3', link: 'https://www.example.com/serie3.m3u8' }
+                { title: 'Serie 1', image: 'https://via.placeholder.com/200x300?text=Serie+1', link: 'https://www.example.com/serie1.mp4' },
+                { title: 'Serie 2', image: 'https://via.placeholder.com/200x300?text=Serie+2', link: 'https://www.example.com/serie2.mkv' },
+                { title: 'Serie 3', image: 'https://via.placeholder.com/200x300?text=Serie+3', link: 'https://www.example.com/serie3.m3u8' }
+                { title: 'Serie 1', image: 'https://via.placeholder.com/200x300?text=Serie+1', link: 'https://www.example.com/serie1.mp4' },
+                { title: 'Serie 2', image: 'https://via.placeholder.com/200x300?text=Serie+2', link: 'https://www.example.com/serie2.mkv' },
+                { title: 'Serie 3', image: 'https://via.placeholder.com/200x300?text=Serie+3', link: 'https://www.example.com/serie3.m3u8' }
             ],
             tv: [
+                { title: 'TV 1', image: 'https://via.placeholder.com/200x300?text=TV+1', link: 'https://www.example.com/tv1.mp4' },
+                { title: 'TV 2', image: 'https://via.placeholder.com/200x300?text=TV+2', link: 'https://www.example.com/tv2.mkv' },
+                { title: 'TV 3', image: 'https://via.placeholder.com/200x300?text=TV+3', link: 'https://www.example.com/tv3.m3u8' }
+                { title: 'TV 1', image: 'https://via.placeholder.com/200x300?text=TV+1', link: 'https://www.example.com/tv1.mp4' },
+                { title: 'TV 2', image: 'https://via.placeholder.com/200x300?text=TV+2', link: 'https://www.example.com/tv2.mkv' },
+                { title: 'TV 3', image: 'https://via.placeholder.com/200x300?text=TV+3', link: 'https://www.example.com/tv3.m3u8' }
                 { title: 'TV 1', image: 'https://via.placeholder.com/200x300?text=TV+1', link: 'https://www.example.com/tv1.mp4' },
                 { title: 'TV 2', image: 'https://via.placeholder.com/200x300?text=TV+2', link: 'https://www.example.com/tv2.mkv' },
                 { title: 'TV 3', image: 'https://via.placeholder.com/200x300?text=TV+3', link: 'https://www.example.com/tv3.m3u8' }
