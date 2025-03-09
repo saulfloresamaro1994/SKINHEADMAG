@@ -174,9 +174,8 @@
         // Datos simulados (títulos de películas para buscar en TMDb)
         const data = {
             movies: [
-                { title: 'Capitán América: Un nuevo mund', image: '', link: 'https://be2719.rcr22.ams01.cdn255.com/hls2/01/08234/0g3752lt7sty_h/master.m3u8?t=jpXCLrnSux8tKZ-UYYT7Izi6xpLE3w94R61psbt20Xc&s=1741552630&e=10800&f=41203253&srv=49&asn=8151&sp=4000&p=' },
-                { title: 'Mickey 17', image: '', link: 'https://13nt2qnqm72d.acek-cdn.com/hls2/01/04059/lho5vx7a8gqb_,l,n,.urlset/master.m3u8?t=ywxeaplP8MqKCSQ-T11Bl2ob7pjFt_Rfenq0lWjhw-4&s=1741552468&e=129600&f=20299815&srv=pmjx9cjae94d&i=0.4&sp=500&p1=pmjx9cjae94d&p2=pmjx9cjae94d&asn=8151' },
-                { title: 'Plankton: La película', image: '', link: 'https://goqp5vk8ekuqh.acek-cdn.com/hls2/01/04059/l0bdiu2naizg_l/master.m3u8?t=q9BnIKOBICLcVzJ9bfxcDbX36pszA0tvyAWhK3tSiwg&s=1741552684&e=129600&f=20299406&srv=yCdcGNsOcuCU&i=0.4&sp=500&p1=yCdcGNsOcuCU&p2=yCdcGNsOcuCU&asn=8151' }
+                { title: 'The Dark Knight', image: '', link: 'https://www.example.com/video.m3u8' },
+                { title: 'The Dark Knight', image: '', link: 'https://www.example.com/video.m3u8' },
                 { title: 'The Dark Knight', image: '', link: 'https://www.example.com/video.m3u8' }
             ],
             series: [
