@@ -134,7 +134,7 @@
     <div class="container">
         <!-- Encabezado con botones -->
         <header>
-            <h1>Mi Plataforma de Streaming</h1>
+            <h1> SERVIDOR SKINHEAD </h1>
             <nav>
                 <button id="moviesBtn">Películas</button>
                 <button id="seriesBtn">Series</button>
