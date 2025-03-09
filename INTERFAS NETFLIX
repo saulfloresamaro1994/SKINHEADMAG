@@ -3,229 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AppCtrator24 - Interfaz tipo Netflix</title>
+    <title>Interfaz tipo Netflix con Reproductor</title>
     <style>
-        /* Estilos generales */
+        /* Estilos CSS */
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: #141414;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
+            color: white;
         }
 
-        /* Barra de navegación */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
-            background-color: #000;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        .navbar img {
-            height: 40px;
-        }
-        .navbar ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-            margin: 0;
-            padding: 0;
-        }
-        .navbar ul li {
-            cursor: pointer;
-        }
-        .navbar ul li:hover {
-            color: #e50914;
         }
 
-        /* Reproductor de video */
-        .video-player {
-            width: 100%;
-            max-width: 800px;
-            margin: 100px auto 20px; /* Margen superior para evitar solapamiento con la barra de navegación */
-            display: none; /* Oculto inicialmente */
-        }
-        .video-player video {
-            width: 100%;
-            border-radius: 10px;
+        header {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        /* Contenedor principal */
-        .main-container {
-            padding-top: 80px; /* Espacio para la barra de navegación */
-        }
-
-        /* Secciones de contenido */
-        .section {
-            margin-bottom: 30px;
-            padding: 0 20px;
-        }
-        .section h2 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-
-        /* Lista de tarjetas */
-        .card-list {
-            display: flex;
-            overflow-x: auto;
-            gap: 15px;
-            padding-bottom: 10px;
-        }
-        .card-list::-webkit-scrollbar {
-            height: 8px;
-        }
-        .card-list::-webkit-scrollbar-thumb {
+        nav button {
             background-color: #e50914;
-            border-radius: 10px;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            font-size: 16px;
         }
 
-        /* Tarjetas de contenido */
-        .card {
-            flex: 0 0 auto;
+        nav button:hover {
+            background-color: #f40612;
+        }
+
+        #content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .content-item {
             width: 200px;
-            background-color: #222;
+            background-color: #333;
             border-radius: 10px;
             overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(229, 9, 20, 0.7);
-        }
-        .card img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-        .card h3 {
+            position: relative;
             text-align: center;
             padding: 10px;
-            margin: 0;
-            font-size: 1em;
         }
 
-        /* Pie de página */
-        .footer {
-            text-align: center;
-            padding: 20px;
+        .content-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .content-item h3 {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .content-item button {
+            background-color: #e50914;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        .content-item button:hover {
+            background-color: #f40612;
+        }
+
+        /* Estilos del reproductor */
+        #videoPlayer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
             background-color: #000;
-            margin-top: 30px;
+            z-index: 1000;
+            display: none;
+        }
+
+        #videoPlayer video {
+            width: 100%;
+            height: auto;
+        }
+
+        #closePlayer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e50914;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        #closePlayer:hover {
+            background-color: #f40612;
+        }
+
+        /* Fondo oscuro detrás del reproductor */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Barra de navegación -->
-    <div class="navbar">
-        <img src="https://via.placeholder.com/150x40" alt="Logo AppCtrator24">
-        <ul>
-            <li>Inicio</li>
-            <li>Series</li>
-            <li>Películas</li>
-            <li>Mi lista</li>
-        </ul>
+    <div class="container">
+        <!-- Encabezado con botones -->
+        <header>
+            <h1>Mi Plataforma de Streaming</h1>
+            <nav>
+                <button id="moviesBtn">Películas</button>
+                <button id="seriesBtn">Series</button>
+                <button id="tvBtn">TV</button>
+            </nav>
+        </header>
+
+        <!-- Contenido dinámico -->
+        <main>
+            <div id="content">
+                <!-- Aquí se cargará el contenido dinámico -->
+            </div>
+        </main>
     </div>
 
     <!-- Reproductor de video -->
-    <div class="video-player" id="videoPlayer">
-        <video controls id="videoElement">
+    <div id="overlay"></div>
+    <div id="videoPlayer">
+        <video controls id="video">
             Tu navegador no soporta la reproducción de video.
         </video>
-    </div>
-
-    <!-- Contenedor principal -->
-    <div class="main-container">
-        <!-- Sección: Canales populares -->
-        <div class="section">
-            <h2>Canales populares</h2>
-            <div class="card-list">
-                <!-- CANAL -->
-                <div class="card" data-src="https://smanpew5.tnas.link/v2/fileManage/ShareMultimediaPlay?share_link=4mTbrMLNbfAveQvDjvN2eTNGf6ULafpOLWjJuH8UFqjW0uw%3D&path=%2Fhome%2FSKINHEAD%2F%E2%9A%A1%EF%B8%8F2025%2FDog%20Man%20(2025)%2FDog%20Man%20(2025).mkv&pwd=">
-                    <img src="https://television-libre.online/img/hbo.webp" alt="DOGMAN">
-                    <h3>HBO</h3>
-                </div>
-                <!-- HBO PLUS -->
-                <div class="card" data-src="https://streamer1.nexgen.bz/HBO_PLUS/tracks-v1a2/mono.m3u8">
-                    <img src="https://via.placeholder.com/200x300" alt="Canal 2">
-                    <h3>Canal 2</h3>
-                </div>
-                <!-- Canal 3 -->
-                <div class="card" data-src="URL_DEL_CANAL_2">
-                    <img src="https://via.placeholder.com/200x300" alt="Canal 2">
-                    <h3>Canal 2</h3>
-            </div>
-        </div>
-
-        <!-- Sección: Películas populares -->
-        <div class="section">
-            <h2>Películas populares</h2>
-            <div class="card-list">
-                <!-- Película 1 -->
-                <div class="card" data-src="URL_DE_LA_PELICULA_1">
-                    <img src="https://via.placeholder.com/200x300" alt="Película 1">
-                    <h3>Película 1</h3>
-                </div>
-                <!-- Película 2 -->
-                <div class="card" data-src="URL_DE_LA_PELICULA_2">
-                    <img src="https://via.placeholder.com/200x300" alt="Película 2">
-                    <h3>Película 2</h3>
-                </div>
-                <!-- Agrega más películas aquí -->
-            </div>
-        </div>
-
-        <!-- Sección: Series populares -->
-        <div class="section">
-            <h2>Series populares</h2>
-            <div class="card-list">
-                <!-- Serie 1 -->
-                <div class="card" data-src="URL_DE_LA_SERIE_1">
-                    <img src="https://via.placeholder.com/200x300" alt="Serie 1">
-                    <h3>Serie 1</h3>
-                </div>
-                <!-- Serie 2 -->
-                <div class="card" data-src="URL_DE_LA_SERIE_2">
-                    <img src="https://via.placeholder.com/200x300" alt="Serie 2">
-                    <h3>Serie 2</h3>
-                </div>
-                <!-- Agrega más series aquí -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Pie de página -->
-    <div class="footer">
-        <p>© 2023 AppCtrator24. Todos los derechos reservados.</p>
+        <button id="closePlayer">Cerrar</button>
     </div>
 
     <script>
-        // Obtener elementos del DOM
+        // Lógica en JavaScript
+        const content = document.getElementById('content');
         const videoPlayer = document.getElementById('videoPlayer');
-        const videoElement = document.getElementById('videoElement');
-        const cards = document.querySelectorAll('.card');
+        const overlay = document.getElementById('overlay');
+        const videoElement = document.getElementById('video');
+        const closePlayerBtn = document.getElementById('closePlayer');
 
-        // Función para reproducir un canal
-        function playChannel(src) {
-            videoElement.src = src;
+        // Datos simulados
+        const data = {
+            movies: [
+                { title: 'Película 1', image: 'https://via.placeholder.com/200x300?text=Película+1', link: 'https://www.example.com/video.mp4' },
+                { title: 'Película 2', image: 'https://via.placeholder.com/200x300?text=Película+2', link: 'https://www.example.com/video.mkv' },
+                { title: 'Película 3', image: 'https://via.placeholder.com/200x300?text=Película+3', link: 'https://www.example.com/video.m3u8' }
+            ],
+            series: [
+                { title: 'Serie 1', image: 'https://via.placeholder.com/200x300?text=Serie+1', link: 'https://www.example.com/serie1.mp4' },
+                { title: 'Serie 2', image: 'https://via.placeholder.com/200x300?text=Serie+2', link: 'https://www.example.com/serie2.mkv' },
+                { title: 'Serie 3', image: 'https://via.placeholder.com/200x300?text=Serie+3', link: 'https://www.example.com/serie3.m3u8' }
+            ],
+            tv: [
+                { title: 'TV 1', image: 'https://via.placeholder.com/200x300?text=TV+1', link: 'https://www.example.com/tv1.mp4' },
+                { title: 'TV 2', image: 'https://via.placeholder.com/200x300?text=TV+2', link: 'https://www.example.com/tv2.mkv' },
+                { title: 'TV 3', image: 'https://via.placeholder.com/200x300?text=TV+3', link: 'https://www.example.com/tv3.m3u8' }
+            ]
+        };
+
+        // Cargar contenido según el tipo
+        document.getElementById('moviesBtn').addEventListener('click', () => loadContent('movies'));
+        document.getElementById('seriesBtn').addEventListener('click', () => loadContent('series'));
+        document.getElementById('tvBtn').addEventListener('click', () => loadContent('tv'));
+
+        function loadContent(type) {
+            content.innerHTML = ''; // Limpiar contenido anterior
+            data[type].forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('content-item');
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <h3>${item.title}</h3>
+                    <button onclick="playVideo('${item.link}')">Reproducir</button>
+                `;
+                content.appendChild(itemElement);
+            });
+        }
+
+        // Reproducir video
+        function playVideo(link) {
+            videoElement.src = link;
             videoPlayer.style.display = 'block';
+            overlay.style.display = 'block';
             videoElement.play();
         }
 
-        // Asignar evento de clic a cada tarjeta
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                const src = card.getAttribute('data-src');
-                if (src) {
-                    playChannel(src);
-                }
-            });
+        // Cerrar reproductor
+        closePlayerBtn.addEventListener('click', () => {
+            videoPlayer.style.display = 'none';
+            overlay.style.display = 'none';
+            videoElement.pause();
+            videoElement.src = '';
         });
+
+        // Cargar contenido inicial
+        loadContent('movies');
     </script>
 </body>
 </html>
