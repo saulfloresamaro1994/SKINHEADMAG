@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interfaz tipo Netflix con Reproductor</title>
     <style>
-        /* Estilos CSS */
+        /* Estilos CSS (sin cambios) */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -167,60 +167,54 @@
         const videoElement = document.getElementById('video');
         const closePlayerBtn = document.getElementById('closePlayer');
 
-        // Datos simulados
-        const data = {
-            movies: [
-                { title: 'Plankton, la película (2025)', image: 'https://www.themoviedb.org/movie/1104845-plankton-the-movie?language=es', link: 'https://www.example.com/video.mp4' },
-                { title: 'Película 2', image: 'https://via.placeholder.com/200x300?text=Película+2', link: 'https://www.example.com/video.mkv' },
-                { title: 'Película 3', image: 'https://via.placeholder.com/200x300?text=Película+3', link: 'https://www.example.com/video.m3u8' }
-                { title: 'Película 1', image: 'https://via.placeholder.com/200x300?text=Película+1', link: 'https://www.example.com/video.mp4' },
-                { title: 'Película 2', image: 'https://via.placeholder.com/200x300?text=Película+2', link: 'https://www.example.com/video.mkv' },
-                { title: 'Película 3', image: 'https://via.placeholder.com/200x300?text=Película+3', link: 'https://www.example.com/video.m3u8' }
-                { title: 'Película 1', image: 'https://via.placeholder.com/200x300?text=Película+1', link: 'https://www.example.com/video.mp4' },
-                { title: 'Película 2', image: 'https://via.placeholder.com/200x300?text=Película+2', link: 'https://www.example.com/video.mkv' },
-                { title: 'Película 3', image: 'https://via.placeholder.com/200x300?text=Película+3', link: 'https://www.example.com/video.m3u8' }
-            ],
-            series: [
-                { title: 'Serie 1', image: 'https://via.placeholder.com/200x300?text=Serie+1', link: 'https://www.example.com/serie1.mp4' },
-                { title: 'Serie 2', image: 'https://via.placeholder.com/200x300?text=Serie+2', link: 'https://www.example.com/serie2.mkv' },
-                { title: 'Serie 3', image: 'https://via.placeholder.com/200x300?text=Serie+3', link: 'https://www.example.com/serie3.m3u8' }
-                { title: 'Serie 1', image: 'https://via.placeholder.com/200x300?text=Serie+1', link: 'https://www.example.com/serie1.mp4' },
-                { title: 'Serie 2', image: 'https://via.placeholder.com/200x300?text=Serie+2', link: 'https://www.example.com/serie2.mkv' },
-                { title: 'Serie 3', image: 'https://via.placeholder.com/200x300?text=Serie+3', link: 'https://www.example.com/serie3.m3u8' }
-                { title: 'Serie 1', image: 'https://via.placeholder.com/200x300?text=Serie+1', link: 'https://www.example.com/serie1.mp4' },
-                { title: 'Serie 2', image: 'https://via.placeholder.com/200x300?text=Serie+2', link: 'https://www.example.com/serie2.mkv' },
-                { title: 'Serie 3', image: 'https://via.placeholder.com/200x300?text=Serie+3', link: 'https://www.example.com/serie3.m3u8' }
-            ],
-            tv: [
-                { title: 'TV 1', image: 'https://via.placeholder.com/200x300?text=TV+1', link: 'https://www.example.com/tv1.mp4' },
-                { title: 'TV 2', image: 'https://via.placeholder.com/200x300?text=TV+2', link: 'https://www.example.com/tv2.mkv' },
-                { title: 'TV 3', image: 'https://via.placeholder.com/200x300?text=TV+3', link: 'https://www.example.com/tv3.m3u8' }
-                { title: 'TV 1', image: 'https://via.placeholder.com/200x300?text=TV+1', link: 'https://www.example.com/tv1.mp4' },
-                { title: 'TV 2', image: 'https://via.placeholder.com/200x300?text=TV+2', link: 'https://www.example.com/tv2.mkv' },
-                { title: 'TV 3', image: 'https://via.placeholder.com/200x300?text=TV+3', link: 'https://www.example.com/tv3.m3u8' }
-                { title: 'TV 1', image: 'https://via.placeholder.com/200x300?text=TV+1', link: 'https://www.example.com/tv1.mp4' },
-                { title: 'TV 2', image: 'https://via.placeholder.com/200x300?text=TV+2', link: 'https://www.example.com/tv2.mkv' },
-                { title: 'TV 3', image: 'https://via.placeholder.com/200x300?text=TV+3', link: 'https://www.example.com/tv3.m3u8' }
-            ]
-        };
+        const apiKey = 'e22418df765186e2208cf44bef9e3bd2'; // API Key de TMDB
+        const baseUrl = 'https://api.themoviedb.org/3';
+        const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
         // Cargar contenido según el tipo
-        document.getElementById('moviesBtn').addEventListener('click', () => loadContent('movies'));
-        document.getElementById('seriesBtn').addEventListener('click', () => loadContent('series'));
-        document.getElementById('tvBtn').addEventListener('click', () => loadContent('tv'));
+        document.getElementById('moviesBtn').addEventListener('click', () => loadContent('movie'));
+        document.getElementById('seriesBtn').addEventListener('click', () => loadContent('tv'));
 
-        function loadContent(type) {
+        async function loadContent(type) {
             content.innerHTML = ''; // Limpiar contenido anterior
-            data[type].forEach(item => {
+
+            // Obtener datos de la API de TMDB
+            const response = await fetch(`${baseUrl}/discover/${type}?api_key=${apiKey}&language=es-ES`);
+            const data = await response.json();
+
+            // Crear elementos de contenido dinámicamente
+            data.results.forEach(item => {
                 const itemElement = document.createElement('div');
                 itemElement.classList.add('content-item');
+
+                // Obtener el enlace de reproducción (puedes personalizar esta lógica)
+                const videoLink = getVideoLink(item.id, type);
+
                 itemElement.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}">
-                    <h3>${item.title}</h3>
-                    <button onclick="playVideo('${item.link}')">Reproducir</button>
+                    <img src="${imageBaseUrl}${item.poster_path}" alt="${item.title || item.name}">
+                    <h3>${item.title || item.name}</h3>
+                    <button onclick="playVideo('${videoLink}')">Reproducir</button>
                 `;
                 content.appendChild(itemElement);
             });
+        }
+
+        // Función para obtener el enlace de video (puedes personalizarla)
+        function getVideoLink(id, type) {
+            // Mapeo de enlaces de video (puedes reemplazar esto con una API o base de datos)
+            const videoLinks = {
+                movie: {
+                    1104845: 'https://www.example.com/videos/plankton.mp4', // Ejemplo para "Plankton, la película"
+                    1234567: 'https://www.example.com/videos/movie2.mp4', // Ejemplo para otra película
+                },
+                tv: {
+                    987654: 'https://www.example.com/videos/serie1.mp4', // Ejemplo para una serie
+                    567890: 'https://www.example.com/videos/serie2.mp4', // Ejemplo para otra serie
+                }
+            };
+
+            // Retorna el enlace correspondiente al ID y tipo (movie/tv)
+            return videoLinks[type][id] || 'https://www.example.com/default-video.mp4'; // Enlace por defecto si no se encuentra
         }
 
         // Reproducir video
@@ -239,8 +233,8 @@
             videoElement.src = '';
         });
 
-        // Cargar contenido inicial
-        loadContent('movies');
+        // Cargar contenido inicial (películas por defecto)
+        loadContent('movie');
     </script>
 </body>
 </html>
