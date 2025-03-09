@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interfaz tipo Netflix con Reproductor</title>
     <style>
-        /* Estilos CSS (sin cambios) */
+        /* Estilos CSS (igual que antes) */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -134,7 +134,7 @@
     <div class="container">
         <!-- Encabezado con botones -->
         <header>
-            <h1> SERVIDOR SKINHEAD </h1>
+            <h1>Mi Plataforma de Streaming</h1>
             <nav>
                 <button id="moviesBtn">Películas</button>
                 <button id="seriesBtn">Series</button>
@@ -167,57 +167,102 @@
         const videoElement = document.getElementById('video');
         const closePlayerBtn = document.getElementById('closePlayer');
 
-        const apiKey = 'e22418df765186e2208cf44bef9e3bd2'; // API Key de TMDB
-        const baseUrl = 'https://api.themoviedb.org/3';
-        const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
+        // Token de autenticación de TMDb
+        const API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMjI0MThkZjc2NTE4NmUyMjA4Y2Y0NGJlZjllM2JkMiIsIm5iZiI6MTcxMTEyMzY3OS44NjYsInN1YiI6IjY1ZmRhY2RmMzc4MDYyMDE3YzM4MTY1NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AlxLhYCCZdwKxX1G0i2OyAko3hb3WvXQx8SeP8Yki-A';
+        const API_URL = 'https://api.themoviedb.org/3';
+
+        // Datos simulados (títulos de películas para buscar en TMDb)
+        const data = {
+            movies: [
+                { title: 'Inception', image: '', link: 'https://www.example.com/video.mp4' },
+                { title: 'Interstellar', image: '', link: 'https://www.example.com/video.mkv' },
+                { title: 'The Dark Knight', image: '', link: 'https://www.example.com/video.m3u8' }
+            ],
+            series: [
+                { title: 'Breaking Bad', image: '', link: 'https://www.example.com/serie1.mp4' },
+                { title: 'Game of Thrones', image: '', link: 'https://www.example.com/serie2.mkv' },
+                { title: 'Stranger Things', image: '', link: 'https://www.example.com/serie3.m3u8' }
+            ],
+            tv: [
+                { title: 'The Office', image: '', link: 'https://www.example.com/tv1.mp4' },
+                { title: 'Friends', image: '', link: 'https://www.example.com/tv2.mkv' },
+                { title: 'The Mandalorian', image: '', link: 'https://www.example.com/tv3.m3u8' }
+            ]
+        };
 
         // Cargar contenido según el tipo
-        document.getElementById('moviesBtn').addEventListener('click', () => loadContent('movie'));
-        document.getElementById('seriesBtn').addEventListener('click', () => loadContent('tv'));
+        document.getElementById('moviesBtn').addEventListener('click', () => loadContent('movies'));
+        document.getElementById('seriesBtn').addEventListener('click', () => loadContent('series'));
+        document.getElementById('tvBtn').addEventListener('click', () => loadContent('tv'));
 
+        // Función para cargar contenido
         async function loadContent(type) {
             content.innerHTML = ''; // Limpiar contenido anterior
-
-            // Obtener datos de la API de TMDB
-            const response = await fetch(`${baseUrl}/discover/${type}?api_key=${apiKey}&language=es-ES`);
-            const data = await response.json();
-
-            // Crear elementos de contenido dinámicamente
-            data.results.forEach(item => {
+            for (const item of data[type]) {
                 const itemElement = document.createElement('div');
                 itemElement.classList.add('content-item');
 
-                // Obtener el enlace de reproducción (puedes personalizar esta lógica)
-                const videoLink = getVideoLink(item.id, type);
+                // Buscar información de la película/serie en TMDb
+                const tmdbData = await searchTmdb(item.title);
+                if (tmdbData) {
+                    item.image = `https://image.tmdb.org/t/p/w500${tmdbData.poster_path}`; // URL de la imagen
+                    item.title = tmdbData.title || tmdbData.name; // Título de la película/serie
+                }
 
                 itemElement.innerHTML = `
-                    <img src="${imageBaseUrl}${item.poster_path}" alt="${item.title || item.name}">
-                    <h3>${item.title || item.name}</h3>
-                    <button onclick="playVideo('${videoLink}')">Reproducir</button>
+                    <img src="${item.image}" alt="${item.title}" onload="scanCover('${item.image}', this)">
+                    <h3>${item.title}</h3>
+                    <button onclick="playVideo('${item.link}')">Reproducir</button>
                 `;
                 content.appendChild(itemElement);
-            });
+            }
         }
 
-        // Función para obtener el enlace de video (puedes personalizarla)
-        function getVideoLink(id, type) {
-            // Mapeo de enlaces de video (puedes reemplazar esto con una API o base de datos)
-            const videoLinks = {
-                movie: {
-                    1104845: 'https://www.example.com/videos/plankton.mp4', // Ejemplo para "Plankton, la película"
-                    1234567: 'https://www.example.com/videos/movie2.mp4', // Ejemplo para otra película
-                },
-                tv: {
-                    987654: 'https://www.example.com/videos/serie1.mp4', // Ejemplo para una serie
-                    567890: 'https://www.example.com/videos/serie2.mp4', // Ejemplo para otra serie
+        // Buscar en TMDb
+        async function searchTmdb(query) {
+            try {
+                const response = await fetch(`${API_URL}/search/movie?query=${encodeURIComponent(query)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${API_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                if (data.results && data.results.length > 0) {
+                    return data.results[0]; // Devuelve el primer resultado
                 }
-            };
-
-            // Retorna el enlace correspondiente al ID y tipo (movie/tv)
-            return videoLinks[type][id] || 'https://www.example.com/default-video.mp4'; // Enlace por defecto si no se encuentra
+            } catch (error) {
+                console.error('Error al buscar en TMDb:', error);
+            }
+            return null;
         }
 
-        // Reproducir video
+        // Escanear carátula automáticamente
+        async function scanCover(imageUrl, imgElement) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_TOKEN}`
+                    },
+                    body: JSON.stringify({ image: imageUrl })
+                });
+                const result = await response.json();
+                console.log('Información de la carátula:', result);
+
+                // Actualizar el título con la información de la API (si es necesario)
+                if (result.title) {
+                    const titleElement = imgElement.nextElementSibling; // El <h3> que sigue a la imagen
+                    titleElement.textContent = result.title;
+                }
+            } catch (error) {
+                console.error('Error al escanear la carátula:', error);
+            }
+        }
+
+        // Reproducir video (igual que antes)
         function playVideo(link) {
             videoElement.src = link;
             videoPlayer.style.display = 'block';
@@ -225,7 +270,7 @@
             videoElement.play();
         }
 
-        // Cerrar reproductor
+        // Cerrar reproductor (igual que antes)
         closePlayerBtn.addEventListener('click', () => {
             videoPlayer.style.display = 'none';
             overlay.style.display = 'none';
@@ -233,8 +278,8 @@
             videoElement.src = '';
         });
 
-        // Cargar contenido inicial (películas por defecto)
-        loadContent('movie');
+        // Cargar contenido inicial
+        loadContent('movies');
     </script>
 </body>
 </html>
