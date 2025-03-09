@@ -174,7 +174,7 @@
         // Datos simulados (títulos de películas para buscar en TMDb)
         const data = {
             movies: [
-                { title: 'Inception', image: '', link: 'https://www.example.com/video.mp4' },
+                { title: 'Capitán América: Un nuevo mund', image: '', link: 'https://www.example.com/video.mp4' },
                 { title: 'Interstellar', image: '', link: 'https://www.example.com/video.mkv' },
                 { title: 'The Dark Knight', image: '', link: 'https://www.example.com/video.m3u8' }
             ],
