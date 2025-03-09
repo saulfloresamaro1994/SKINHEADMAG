@@ -3,259 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magis TV - Reproductor Universal</title>
-    <!-- Video.js CSS -->
-    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+    <title>AppCtrator24 - Interfaz tipo Netflix</title>
     <style>
         /* Estilos generales */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #121212;
-            color: #fff;
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: #ffffff;
             margin: 0;
             padding: 0;
         }
 
         /* Barra de navegación */
         .navbar {
-            background-color: #1a1a1a;
-            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .navbar h1 {
-            margin: 0;
-            color: #ff5722;
-            font-size: 24px;
-        }
-
-        .navbar input[type="text"] {
-            padding: 8px;
-            border: none;
-            border-radius: 5px;
-            width: 300px;
-            background-color: #333;
-            color: #fff;
-        }
-
-        /* Reproductor */
-        .player-section {
-            background-color: #000;
             padding: 20px;
-            text-align: center;
+            background-color: #000;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar img {
+            height: 40px;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar ul li {
+            cursor: pointer;
+        }
+        .navbar ul li:hover {
+            color: #e50914;
         }
 
-        .video-js {
+        /* Reproductor de video */
+        .video-player {
             width: 100%;
             max-width: 800px;
-            height: auto;
+            margin: 100px auto 20px; /* Margen superior para evitar solapamiento con la barra de navegación */
+            display: none; /* Oculto inicialmente */
+        }
+        .video-player video {
+            width: 100%;
             border-radius: 10px;
         }
 
         /* Contenedor principal */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
+        .main-container {
+            padding-top: 80px; /* Espacio para la barra de navegación */
         }
 
         /* Secciones de contenido */
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .section h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
         }
 
-        .section h2 {
-            color: #ff5722;
-            border-bottom: 2px solid #ff5722;
+        /* Lista de tarjetas */
+        .card-list {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
             padding-bottom: 10px;
-            margin-bottom: 20px;
+        }
+        .card-list::-webkit-scrollbar {
+            height: 8px;
+        }
+        .card-list::-webkit-scrollbar-thumb {
+            background-color: #e50914;
+            border-radius: 10px;
         }
 
         /* Tarjetas de contenido */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
         .card {
-            background-color: #1a1a1a;
+            flex: 0 0 auto;
+            width: 200px;
+            background-color: #222;
             border-radius: 10px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.7);
         }
-
         .card img {
             width: 100%;
-            height: 150px;
+            height: 300px;
             object-fit: cover;
         }
-
-        .card-content {
-            padding: 15px;
-        }
-
         .card h3 {
+            text-align: center;
+            padding: 10px;
             margin: 0;
-            font-size: 18px;
-            color: #ff5722;
-        }
-
-        .card p {
-            margin: 10px 0;
-            font-size: 14px;
-            color: #ccc;
-        }
-
-        .card button {
-            background-color: #ff5722;
-            border: none;
-            padding: 8px 15px;
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .card button:hover {
-            background-color: #e64a19;
+            font-size: 1em;
         }
 
         /* Pie de página */
-        footer {
-            background-color: #1a1a1a;
-            padding: 20px;
+        .footer {
             text-align: center;
-            margin-top: 40px;
-        }
-
-        footer p {
-            margin: 0;
-            color: #ccc;
+            padding: 20px;
+            background-color: #000;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
     <!-- Barra de navegación -->
     <div class="navbar">
-        <h1>Magis TV</h1>
-        <input type="text" placeholder="Buscar películas, series, canales...">
+        <img src="https://via.placeholder.com/150x40" alt="Logo AppCtrator24">
+        <ul>
+            <li>Inicio</li>
+            <li>Series</li>
+            <li>Películas</li>
+            <li>Mi lista</li>
+        </ul>
     </div>
 
-    <!-- Reproductor -->
-    <div class="player-section">
-        <video id="mediaPlayer" class="video-js vjs-default-skin" controls preload="auto" width="800" height="450">
-            <source src="" type="application/x-mpegURL">
-            <p class="vjs-no-js">
-                Para ver este video, habilita JavaScript o considera actualizar tu navegador.
-            </p>
+    <!-- Reproductor de video -->
+    <div class="video-player" id="videoPlayer">
+        <video controls id="videoElement">
+            Tu navegador no soporta la reproducción de video.
         </video>
     </div>
 
     <!-- Contenedor principal -->
-    <div class="container">
-        <!-- Sección de Películas -->
+    <div class="main-container">
+        <!-- Sección: Canales populares -->
         <div class="section">
-            <h2>Películas</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <img src="https://via.placeholder.com/200x150" alt="Película 1">
-                    <div class="card-content">
-                        <h3>Película 1</h3>
-                        <p>Descripción de la película 1.</p>
-                        <button onclick="playMedia('movie1.mp4', 'video/mp4')">Reproducir</button>
-                    </div>
+            <h2>Canales populares</h2>
+            <div class="card-list">
+                <!-- PELICULA -->
+                <div class="card" data-src="https://qdihmnfwepxni.acek-cdn.com/hls2/01/04059/lho5vx7a8gqb_,l,n,.urlset/master.m3u8?t=gyuYUWkD57vlFxziV4rYL8BxeGFc50lFL9VOsz5Wd2I&s=1741488908&e=129600&f=20299815&srv=pmjx9cjae94d&i=0.4&sp=500&p1=pmjx9cjae94d&p2=pmjx9cjae94d&asn=8151">
+                    <img src="https://television-libre.online/img/hbo.webp" alt="HBO">
+                    <h3>HBO</h3>
                 </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/200x150" alt="Película 2">
-                    <div class="card-content">
-                        <h3>Película 2</h3>
-                        <p>Descripción de la película 2.</p>
-                        <button onclick="playMedia('movie2.mkv', 'video/x-matroska')">Reproducir</button>
-                    </div>
+                <!-- HBO PLUS -->
+                <div class="card" data-src="https://streamer1.nexgen.bz/HBO_PLUS/tracks-v1a2/mono.m3u8">
+                    <img src="https://via.placeholder.com/200x300" alt="Canal 2">
+                    <h3>Canal 2</h3>
                 </div>
-                <!-- Agrega más tarjetas aquí -->
+                <!-- Canal 3 -->
+                <div class="card" data-src="URL_DEL_CANAL_2">
+                    <img src="https://via.placeholder.com/200x300" alt="Canal 2">
+                    <h3>Canal 2</h3>
             </div>
         </div>
 
-        <!-- Sección de Series -->
+        <!-- Sección: Películas populares -->
         <div class="section">
-            <h2>Series</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <img src="https://via.placeholder.com/200x150" alt="Serie 1">
-                    <div class="card-content">
-                        <h3>Serie 1</h3>
-                        <p>Descripción de la serie 1.</p>
-                        <button onclick="playMedia('series1.m3u8', 'application/x-mpegURL')">Reproducir</button>
-                    </div>
+            <h2>Películas populares</h2>
+            <div class="card-list">
+                <!-- Película 1 -->
+                <div class="card" data-src="URL_DE_LA_PELICULA_1">
+                    <img src="https://via.placeholder.com/200x300" alt="Película 1">
+                    <h3>Película 1</h3>
                 </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/200x150" alt="Serie 2">
-                    <div class="card-content">
-                        <h3>Serie 2</h3>
-                        <p>Descripción de la serie 2.</p>
-                        <button onclick="playMedia('series2.avi', 'video/x-msvideo')">Reproducir</button>
-                    </div>
+                <!-- Película 2 -->
+                <div class="card" data-src="URL_DE_LA_PELICULA_2">
+                    <img src="https://via.placeholder.com/200x300" alt="Película 2">
+                    <h3>Película 2</h3>
                 </div>
-                <!-- Agrega más tarjetas aquí -->
+                <!-- Agrega más películas aquí -->
             </div>
         </div>
 
-        <!-- Sección de Canales -->
+        <!-- Sección: Series populares -->
         <div class="section">
-            <h2>Canales</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <img src="https://via.placeholder.com/200x150" alt="Canal 1">
-                    <div class="card-content">
-                        <h3>Canal 1</h3>
-                        <p>Descripción del canal 1.</p>
-                        <button onclick="playMedia('channel1.m3u', 'application/x-mpegURL')">Reproducir</button>
-                    </div>
+            <h2>Series populares</h2>
+            <div class="card-list">
+                <!-- Serie 1 -->
+                <div class="card" data-src="URL_DE_LA_SERIE_1">
+                    <img src="https://via.placeholder.com/200x300" alt="Serie 1">
+                    <h3>Serie 1</h3>
                 </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/200x150" alt="Canal 2">
-                    <div class="card-content">
-                        <h3>Canal 2</h3>
-                        <p>Descripción del canal 2.</p>
-                        <button onclick="playMedia('channel2.m3u8', 'application/x-mpegURL')">Reproducir</button>
-                    </div>
+                <!-- Serie 2 -->
+                <div class="card" data-src="URL_DE_LA_SERIE_2">
+                    <img src="https://via.placeholder.com/200x300" alt="Serie 2">
+                    <h3>Serie 2</h3>
                 </div>
-                <!-- Agrega más tarjetas aquí -->
+                <!-- Agrega más series aquí -->
             </div>
         </div>
     </div>
 
     <!-- Pie de página -->
-    <footer>
-        <p>&copy; 2023 Magis TV. Todos los derechos reservados.</p>
-    </footer>
+    <div class="footer">
+        <p>© 2023 AppCtrator24. Todos los derechos reservados.</p>
+    </div>
 
-    <!-- Video.js -->
-    <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
     <script>
-        // Inicializar el reproductor
-        const player = videojs('mediaPlayer', {
-            controls: true,
-            autoplay: false,
-            preload: 'auto',
-        });
+        // Obtener elementos del DOM
+        const videoPlayer = document.getElementById('videoPlayer');
+        const videoElement = document.getElementById('videoElement');
+        const cards = document.querySelectorAll('.card');
 
-        // Función para reproducir contenido en el reproductor
-        function playMedia(src, type) {
-            player.src({ src, type });
-            player.play();
+        // Función para reproducir un canal
+        function playChannel(src) {
+            videoElement.src = src;
+            videoPlayer.style.display = 'block';
+            videoElement.play();
         }
+
+        // Asignar evento de clic a cada tarjeta
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const src = card.getAttribute('data-src');
+                if (src) {
+                    playChannel(src);
+                }
+            });
+        });
     </script>
 </body>
 </html>
