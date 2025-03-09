@@ -170,7 +170,7 @@
         // Datos simulados
         const data = {
             movies: [
-                { title: 'Película 1', image: 'https://via.placeholder.com/200x300?text=Película+1', link: 'https://www.example.com/video.mp4' },
+                { title: 'Plankton, la película (2025)', image: 'https://www.themoviedb.org/movie/1104845-plankton-the-movie?language=es', link: 'https://www.example.com/video.mp4' },
                 { title: 'Película 2', image: 'https://via.placeholder.com/200x300?text=Película+2', link: 'https://www.example.com/video.mkv' },
                 { title: 'Película 3', image: 'https://via.placeholder.com/200x300?text=Película+3', link: 'https://www.example.com/video.m3u8' }
                 { title: 'Película 1', image: 'https://via.placeholder.com/200x300?text=Película+1', link: 'https://www.example.com/video.mp4' },
