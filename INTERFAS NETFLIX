@@ -145,9 +145,9 @@
         <div class="section">
             <h2>Canales populares</h2>
             <div class="card-list">
-                <!-- PELICULA -->
-                <div class="card" data-src="https://qdihmnfwepxni.acek-cdn.com/hls2/01/04059/lho5vx7a8gqb_,l,n,.urlset/master.m3u8?t=gyuYUWkD57vlFxziV4rYL8BxeGFc50lFL9VOsz5Wd2I&s=1741488908&e=129600&f=20299815&srv=pmjx9cjae94d&i=0.4&sp=500&p1=pmjx9cjae94d&p2=pmjx9cjae94d&asn=8151">
-                    <img src="https://television-libre.online/img/hbo.webp" alt="HBO">
+                <!-- CANAL -->
+                <div class="card" data-src="https://smanpew5.tnas.link/v2/fileManage/ShareMultimediaPlay?share_link=4mTbrMLNbfAveQvDjvN2eTNGf6ULafpOLWjJuH8UFqjW0uw%3D&path=%2Fhome%2FSKINHEAD%2F%E2%9A%A1%EF%B8%8F2025%2FDog%20Man%20(2025)%2FDog%20Man%20(2025).mkv&pwd=">
+                    <img src="https://television-libre.online/img/hbo.webp" alt="DOGMAN">
                     <h3>HBO</h3>
                 </div>
                 <!-- HBO PLUS -->
