@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magis TV - Plataforma de Entretenimiento</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Barra de navegación */
+        .navbar {
+            background-color: #1a1a1a;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar h1 {
+            margin: 0;
+            color: #ff5722;
+            font-size: 24px;
+        }
+
+        .navbar input[type="text"] {
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            width: 300px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* Reproductor */
+        .player-section {
+            background-color: #000;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .player-section video {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* Secciones de contenido */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #ff5722;
+            border-bottom: 2px solid #ff5722;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Contenedor de tarjetas con desplazamiento horizontal */
+        .card-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding-bottom: 20px; /* Espacio para el scroll */
+        }
+
+        .card-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .card-scroll::-webkit-scrollbar-thumb {
+            background-color: #ff5722;
+            border-radius: 10px;
+        }
+
+        .card-scroll::-webkit-scrollbar-track {
+            background-color: #333;
+        }
+
+        /* Tarjetas de contenido */
+        .card {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex: 0 0 auto; /* Evita que las tarjetas se estiren */
+            width: 200px; /* Ancho fijo para las tarjetas */
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #ff5722;
+        }
+
+        .card p {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .card button {
+            background-color: #ff5722;
+            border: none;
+            padding: 8px 15px;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .card button:hover {
+            background-color: #e64a19;
+        }
+
+        /* Pie de página */
+        footer {
+            background-color: #1a1a1a;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <h1>Magis TV</h1>
+        <input type="text" placeholder="Buscar películas, series, canales...">
+    </div>
+
+    <!-- Reproductor -->
+    <div class="player-section">
+        <video id="mediaPlayer" controls>
+            <source src="" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+        </video>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Sección de Películas -->
+        <div class="section">
+            <h2>Películas</h2>
+            <div class="card-scroll">
+                <div class="card">
+                    <img src="https://via.placeholder.com/200x150" alt="Película 1">
+                    <div class="card-content">
+                        <h3>Película 1</h3>
+                        <p>Descripción de la película 1.</p>
+                        <button onclick="playMedia('movie1.mp4')">Reproducir</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://via.placeholder.com/200x150" alt="Película 2">
+                    <div class="card-content">
+                        <h3>Película 2</h3>
+                        <p>Descripción de la película 2.</p>
+                        <button onclick="playMedia('movie2.mp4')">Reproducir</button>
+                    </div>
+                </div>
+                <!-- Agrega más tarjetas aquí -->
+            </div>
+        </div>
+
+        <!-- Sección de Series -->
+        <div class="section">
+            <h2>Series</h2>
+            <div class="card-scroll">
+                <div class="card">
+                    <img src="https://via.placeholder.com/200x150" alt="Serie 1">
+                    <div class="card-content">
+                        <h3>Serie 1</h3>
+                        <p>Descripción de la serie 1.</p>
+                        <button onclick="playMedia('series1.mp4')">Reproducir</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://via.placeholder.com/200x150" alt="Serie 2">
+                    <div class="card-content">
+                        <h3>Serie 2</h3>
+                        <p>Descripción de la serie 2.</p>
+                        <button onclick="playMedia('series2.mp4')">Reproducir</button>
+                    </div>
+                </div>
+                <!-- Agrega más tarjetas aquí -->
+            </div>
+        </div>
+
+        <!-- Sección de Canales -->
+        <div class="section">
+            <h2>Canales</h2>
+            <div class="card-scroll">
+                <div class="card">
+                    <img src="https://via.placeholder.com/200x150" alt="Canal 1">
+                    <div class="card-content">
+                        <h3>Canal 1</h3>
+                        <p>Descripción del canal 1.</p>
+                        <button onclick="playMedia('channel1.mp4')">Reproducir</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://via.placeholder.com/200x150" alt="Canal 2">
+                    <div class="card-content">
+                        <h3>Canal 2</h3>
+                        <p>Descripción del canal 2.</p>
+                        <button onclick="playMedia('channel2.mp4')">Reproducir</button>
+                    </div>
+                </div>
+                <!-- Agrega más tarjetas aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>© 2023 Magis TV. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Función para reproducir contenido en el reproductor
+        function playMedia(src) {
+            const player = document.getElementById('mediaPlayer');
+            player.src = src;
+            player.play();
+        }
+    </script>
+</body>
+</html>
